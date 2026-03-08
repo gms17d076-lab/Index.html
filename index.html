@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3-р сарын 8-ны мэнд!</title>
+    <title>Мартын 8-ны мэнд!</title>
     <style>
-        body { margin: 0; background: black; overflow: hidden; font-family: 'Arial', sans-serif; }
+        /* Арын фон болон ерөнхий загвар */
+        body { 
+            margin: 0; 
+            background: black; 
+            overflow: hidden; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        }
         canvas { display: block; }
         
+        /* Текст байрлах хэсэг */
         .content {
             position: absolute;
             top: 50%;
@@ -16,29 +23,46 @@
             text-align: center;
             color: #ff69b4;
             z-index: 1;
-            width: 90%;
+            width: 85%;
+            background: rgba(0, 0, 0, 0.6); /* Текст уншигдахуйц болгох бүрхүүл */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
         }
 
         h1 {
-            font-size: 2.5rem;
-            text-shadow: 0 0 20px #ff69b4;
+            font-size: 1.8rem;
+            line-height: 1.4;
+            text-shadow: 0 0 15px #ff69b4;
             animation: glow 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        .signature {
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 10px;
         }
 
         .heart {
-            font-size: 100px;
+            font-size: 60px;
             color: #ff1493;
-            margin-bottom: 20px;
-            animation: beat 1s infinite;
+            margin-bottom: 10px;
+            animation: beat 1.2s infinite;
+            display: inline-block;
         }
 
+        /* Хөдөлгөөнт эффектүүд */
         @keyframes beat {
-            to { transform: scale(1.2); }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         @keyframes glow {
             from { text-shadow: 0 0 10px #ff69b4; }
-            to { text-shadow: 0 0 30px #ff1493, 0 0 10px #fff; }
+            to { text-shadow: 0 0 25px #ff1493, 0 0 10px #fff; }
         }
     </style>
 </head>
@@ -46,36 +70,52 @@
     <canvas id="matrix"></canvas>
     <div class="content">
         <div class="heart">❤️</div>
-        <h1>Олон улсын эмэгтэйчүүдийн эрхийг хамгаалах өдрийн мэнд хүргэе!</h1>
-        <p style="color: white; font-size: 1.2rem;">Та бол дэлхийн хамгийн үзэсгэлэнтэй цэцэг юм.</p>
+        <h1>Ургах наран цэцэрлэгийн эрхэм сайхан бүсгүйчүүддээ Мартын 8-ны баярын мэнд хүргэе. <br><br> Инээмсэглэл, аз жаргал тань үргэлж дэлгэрч байх болтугай.</h1>
+        <div class="signature">Хүндэтгэсэн: Эмч Ундармаагаас 🌷</div>
     </div>
 
     <script>
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
 
+        // Дэлгэцийн хэмжээнд тааруулах
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const letters = "МАTPИX01❤️🌸✨";
+        // Matrix эффектэд орох тэмдэгтүүд
+        const letters = "🌸✨MARCH8❤️LOVE🌷HAPPYWOMENSDAY🌸";
         const fontSize = 16;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
 
         function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            // Арын фоныг бага багаар бүдгэрүүлж зурах
+            ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#ff69b4";
+            
+            ctx.fillStyle = "#ff69b4"; // Ягаан өнгө
             ctx.font = fontSize + "px arial";
 
             drops.forEach((y, i) => {
                 const text = letters[Math.floor(Math.random() * letters.length)];
                 ctx.fillText(text, i * fontSize, y * fontSize);
-                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                
+                // Тэмдэгтүүд доошоо урсах хурд ба дахин эхлэх цэг
+                if (y * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
                 drops[i]++;
             });
         }
-        setInterval(draw, 33);
+        setInterval(draw, 40);
+
+        // Дэлгэцийн хэмжээ өөрчлөгдөхөд дахин тохируулах
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
     </script>
 </body>
 </html>
+
+
