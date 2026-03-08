@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3-р сарын 8-ны мэнд!</title>
+    <style>
+        body { margin: 0; background: black; overflow: hidden; font-family: 'Arial', sans-serif; }
+        canvas { display: block; }
+        
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #ff69b4;
+            z-index: 1;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 0 0 20px #ff69b4;
+            animation: glow 2s infinite alternate;
+        }
+
+        .heart {
+            font-size: 100px;
+            color: #ff1493;
+            margin-bottom: 20px;
+            animation: beat 1s infinite;
+        }
+
+        @keyframes beat {
+            to { transform: scale(1.2); }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ff69b4; }
+            to { text-shadow: 0 0 30px #ff1493, 0 0 10px #fff; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    <div class="content">
+        <div class="heart">❤️</div>
+        <h1>Олон улсын эмэгтэйчүүдийн эрхийг хамгаалах өдрийн мэнд хүргэе!</h1>
+        <p style="color: white; font-size: 1.2rem;">Та бол дэлхийн хамгийн үзэсгэлэнтэй цэцэг юм.</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const letters = "МАTPИX01❤️🌸✨";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#ff69b4";
+            ctx.font = fontSize + "px arial";
+
+            drops.forEach((y, i) => {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, y * fontSize);
+                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            });
+        }
+        setInterval(draw, 33);
+    </script>
+</body>
+</html>
